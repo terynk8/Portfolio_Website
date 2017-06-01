@@ -1,0 +1,45 @@
+h1 {
+color :red;
+}
+p {
+color :black;
+}
+
+#navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+.navitem a.active{
+	background-color :white;
+	color :black;
+}
+.navitem {
+    float: left;
+}
+
+.navitem a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.navitem a:hover {
+    background-color: #cc00ff;
+}
+.navitem {
+    border-right: 1px solid #bbb;
+}
+
+.navitem:last-child {
+    border-right: 1px solid #bbb;
+}
+
+.rotateimg {
+	transform: rotate(90deg);
+}

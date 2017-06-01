@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<link rel="stylesheet" type="text/css" href="style2.css">
+</head>
+	<body>
+<!--beginning of nav bar-->
+		<ul id="navbar">
+  			<li class="navitem"><a href="portfoliowebsite.html">Home</a></li>
+  			<li class="navitem"><a href="portfoliowebhobby.html">Hobby Website</a></li>
+			<li class="navitem"><a href="portfoliowebbonsai.html">Bonsai Art</a></li>
+			<li class="navitem"><a href="portfoliowebvaca.html">Dream Vacation</a></li>
+ 			<li class="navitem"><a href="portfoliowebscratch.html">Scratch</a></li>
+ 			<li class="navitem"><a href="portfoliowebpython.html">Python Story</a></li>
+ 			<li class="navitem"><a class="active" href="portfoliowebimage.html">Image Artist</a></li>
+ 			<li class="navitem"><a href="portfoliowebfinal.html">CompSci Final</a></li>
+			</ul>
+	<!--ending of nav bar-->
+	<h1>Image Artist</h1>
+			<p><font size= "4">This project we had to create a filter for an image. Using Canopy I made a star border around 
+			a basketball image. Also we got to create our own Instagram like filters. My partner and I created a squircle
+			that changes colors based on the background of the picture.</font><img src="basketball.png" height = 500px width= 700px>
+			</p>
+			<br><p> Here's the before and after image for our Instagram Filter</br><br><img src="Instagram.jpeg"height = 500px
+			width = 500px class="rotateimg"></p>
+			<br><p>Here's the after image!</p></br>
+			<br><p><img src="Instagram2.png" height = 500px width = 500px></p></br>
+			<br><p style="color:#ff0000"><font size="5">Heres the code for the filter!</font></p></br>
+			<br><p>import PIL</br>
+<br>import matplotlib.pyplot as plt # single use of plt is commented out</br>
+<br>import os.path</br>
+<br>import numpy as np</br>
+<br>import math</br>        
+
+
+<br>def distance2(xi, yi, xii, yii):</br>
+    <br>sq1 = (xi-xii)*(xi-xii)</br>
+    <br>sq2 = (yi-yii)*(yi-yii)</br>
+    <br>return sq1 + sq2</br>
+    
+    
+<br>def teryn(original_image):</br>
+    <br>""" Insert comment regarding what this does here</br>
+    
+    <br>original_image must be a PIL.Image</br>
+    <br>"""
+
+    <br>#converts the image to a numpy ndarray</br>
+    <br>original_image = original_image.convert("RGB")</br>
+    <br>img = np.array(original_image)</br>
+            
+    <br>height = len(img)</br>
+    <br>width = len(img[0])</br>
+    <br>a= width/2.01</br>
+    <br>k= height/2.01</br>
+    <br>for row in range(0, height):</br>
+        <br>for col in range(0, width):</br>
+            <br>r,g,b = img[row][col] #gets the r,g,b values from the pixel</br>
+            <br>if width == height:</br>
+                <br>if (col-a)**4+(row-k)**4 > (height/2.01)**4: #outside circle</br>
+                    <br>dex = (( distance2(width/2, col, height/2, row))-(width/2)**2) </br>
+                    <br>maxd = (((width/2)*math.sqrt(2))-width/2)</br>
+                    <br>#print str(dex) + " " + str(maxd) + " " + str(row) + " " + str(col) + " "</br>
+                    <br>if 255-(float(dex)/maxd)*(0) == 255:</br>
+                        <br>b = b*(float(dex)/maxd)</br>
+                        <br>r = r-(75 * float(dex)/maxd)#intentional underflow/overflow</br>
+                        <br>if b > 255:#prevents overflow</br>
+                           <br> b = 255</br>
+                        <br>img[row][col] = [r, g, b]</br>
+                    <br>else:</br>
+                        <br>img[row][col] = [r, 0, 0]</br>
+            
+    <br>#convert it back to an image from an array</br>
+    <br>result = PIL.Image.fromarray(np.uint8(img))</br>
+    
+    <br>return result</br>
+    
+<br>def get_images(directory=None):</br>
+    <br>""" Returns PIL.Image objects for all the images in directory.</br>
+    
+    <br>If directory is not specified, uses current directory.</br>
+    <br>Returns a 2-tuple containing </br>
+    <br>a list with a  PIL.Image object for each image file in root_directory, and</br>
+    <br>a list with a string filename for each image file in root_directory</br>
+    <br>"""
+    </br>
+    <br>if directory == None:</br>
+        <br>directory = os.getcwd() # Use working directory if unspecified</br>
+        
+    <br>image_list = [] # Initialize aggregaotrs</br>
+    <br>file_list = []</br>
+    
+    <br>directory_list = os.listdir(directory) # Get list of files</br>
+    <br>for entry in directory_list:</br>
+        <br>absolute_filename = os.path.join(directory, entry)</br>
+        <br>try:</br>
+            <br>image = PIL.Image.open(absolute_filename)</br>
+            <br>file_list += [entry]</br>
+            <br>image_list += [image]</br>
+        <br>except IOError:</br>
+            <br>pass # do nothing with errors tying to open non-images</br>
+    <br>return image_list, file_list</br>
+
+<br>def garima(directory=None):</br>
+    <br>""" Saves a modfied version of each image in directory.</br>
+    
+    <br>Uses current directory if no directory is specified. </br>
+    <br>Places images in subdirectory 'modified', creating it if it does not exist.</br>
+    <br>New image files are of type PNG and have transparent rounded corners.</br>
+    <br>"""</br>
+ 
+    <br>if directory == None:</br>
+        <br>directory = os.getcwd() # Use working directory if unspecified</br>
+        
+    <br># Create a new directory 'altered'</br>
+    <br>new_directory = os.path.join(directory, 'altered')</br>
+    <br>try:</br>
+        <br>os.mkdir(new_directory)</br>
+    <br>except OSError:</br>
+        <br>pass # if the directory already exists, proceed</br>
+    
+    <br>#load all the images</br>
+    <br>image_list, file_list = get_images(directory)  </br>
+
+    <br>#go through the images and save modified versions</br>
+    <br>for n in range(len(image_list)):</br>
+        <br># Parse the filename</br>
+        <br>filename, filetype = file_list[n].split('.')</br>
+        
+        <br># calls your modified method, passing the color parameter</br>
+        <br>new_image = teryn(image_list[n])</br>
+
+        <br>#save the altered image, suing PNG to retain transparency</br>
+       <br> new_image_filename = os.path.join(new_directory, filename + '.png')</br>
+        <br>new_image.save(new_image_filename)</br>    
+        </p></br>
+	</body>
+	</head>
+	</html>
