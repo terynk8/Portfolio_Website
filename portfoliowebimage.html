@@ -26,114 +26,115 @@
 			<br><p>Here's the after image!</p></br>
 			<br><p><img src="Instagram2.png" height = 500px width = 500px></p></br>
 			<br><p style="color:#ff0000"><font size="5">Heres the code for the filter!</font></p></br>
-			<br><p>import PIL</br>
-<br>import matplotlib.pyplot as plt # single use of plt is commented out</br>
-<br>import os.path</br>
-<br>import numpy as np</br>
-<br>import math</br>        
+<pre>
+import PIL
+import matplotlib.pyplot as plt # single use of plt is commented out
+import os.path  
+import numpy as np
+import math            
 
 
-<br>def distance2(xi, yi, xii, yii):</br>
-    <br>sq1 = (xi-xii)*(xi-xii)</br>
-    <br>sq2 = (yi-yii)*(yi-yii)</br>
-    <br>return sq1 + sq2</br>
+def distance2(xi, yi, xii, yii):
+    sq1 = (xi-xii)*(xi-xii)
+    sq2 = (yi-yii)*(yi-yii)
+    return sq1 + sq2
     
     
-<br>def teryn(original_image):</br>
-    <br>""" Insert comment regarding what this does here</br>
+def teryn(original_image):
+    """ Insert comment regarding what this does here
     
-    <br>original_image must be a PIL.Image</br>
-    <br>"""
+    original_image must be a PIL.Image
+    """
 
-    <br>#converts the image to a numpy ndarray</br>
-    <br>original_image = original_image.convert("RGB")</br>
-    <br>img = np.array(original_image)</br>
+    #converts the image to a numpy ndarray
+    original_image = original_image.convert("RGB")
+    img = np.array(original_image)
             
-    <br>height = len(img)</br>
-    <br>width = len(img[0])</br>
-    <br>a= width/2.01</br>
-    <br>k= height/2.01</br>
-    <br>for row in range(0, height):</br>
-        <br>for col in range(0, width):</br>
-            <br>r,g,b = img[row][col] #gets the r,g,b values from the pixel</br>
-            <br>if width == height:</br>
-                <br>if (col-a)**4+(row-k)**4 > (height/2.01)**4: #outside circle</br>
-                    <br>dex = (( distance2(width/2, col, height/2, row))-(width/2)**2) </br>
-                    <br>maxd = (((width/2)*math.sqrt(2))-width/2)</br>
-                    <br>#print str(dex) + " " + str(maxd) + " " + str(row) + " " + str(col) + " "</br>
-                    <br>if 255-(float(dex)/maxd)*(0) == 255:</br>
-                        <br>b = b*(float(dex)/maxd)</br>
-                        <br>r = r-(75 * float(dex)/maxd)#intentional underflow/overflow</br>
-                        <br>if b > 255:#prevents overflow</br>
-                           <br> b = 255</br>
-                        <br>img[row][col] = [r, g, b]</br>
-                    <br>else:</br>
-                        <br>img[row][col] = [r, 0, 0]</br>
+    height = len(img)
+    width = len(img[0])
+    a= width/2.01
+    k= height/2.01
+    for row in range(0, height):
+        for col in range(0, width):
+            r,g,b = img[row][col] #gets the r,g,b values from the pixel
+            if width == height:
+                if (col-a)**4+(row-k)**4 > (height/2.01)**4: #outside circle
+                    dex = (( distance2(width/2, col, height/2, row))-(width/2)**2) 
+                    maxd = (((width/2)*math.sqrt(2))-width/2)
+                    #print str(dex) + " " + str(maxd) + " " + str(row) + " " + str(col) + " "
+                    if 255-(float(dex)/maxd)*(0) == 255:
+                        b = b*(float(dex)/maxd)
+                        r = r-(75 * float(dex)/maxd)#intentional underflow/overflow
+                        if b > 255:#prevents overflow
+                            b = 255
+                        img[row][col] = [r, g, b]
+                    else:
+                        img[row][col] = [r, 0, 0]
             
-    <br>#convert it back to an image from an array</br>
-    <br>result = PIL.Image.fromarray(np.uint8(img))</br>
+    #convert it back to an image from an array
+    result = PIL.Image.fromarray(np.uint8(img))
     
-    <br>return result</br>
+    return result
     
-<br>def get_images(directory=None):</br>
-    <br>""" Returns PIL.Image objects for all the images in directory.</br>
+def get_images(directory=None):
+    """ Returns PIL.Image objects for all the images in directory.
     
-    <br>If directory is not specified, uses current directory.</br>
-    <br>Returns a 2-tuple containing </br>
-    <br>a list with a  PIL.Image object for each image file in root_directory, and</br>
-    <br>a list with a string filename for each image file in root_directory</br>
-    <br>"""
-    </br>
-    <br>if directory == None:</br>
-        <br>directory = os.getcwd() # Use working directory if unspecified</br>
+    If directory is not specified, uses current directory.
+    Returns a 2-tuple containing 
+    a list with a  PIL.Image object for each image file in root_directory, and
+    a list with a string filename for each image file in root_directory
+    """
+    
+    if directory == None:
+        directory = os.getcwd() # Use working directory if unspecified
         
-    <br>image_list = [] # Initialize aggregaotrs</br>
-    <br>file_list = []</br>
+    image_list = [] # Initialize aggregaotrs
+    file_list = []
     
-    <br>directory_list = os.listdir(directory) # Get list of files</br>
-    <br>for entry in directory_list:</br>
-        <br>absolute_filename = os.path.join(directory, entry)</br>
-        <br>try:</br>
-            <br>image = PIL.Image.open(absolute_filename)</br>
-            <br>file_list += [entry]</br>
-            <br>image_list += [image]</br>
-        <br>except IOError:</br>
-            <br>pass # do nothing with errors tying to open non-images</br>
-    <br>return image_list, file_list</br>
+    directory_list = os.listdir(directory) # Get list of files
+    for entry in directory_list:
+        absolute_filename = os.path.join(directory, entry)
+        try:
+            image = PIL.Image.open(absolute_filename)
+            file_list += [entry]
+            image_list += [image]
+        except IOError:
+            pass # do nothing with errors tying to open non-images
+    return image_list, file_list
 
-<br>def garima(directory=None):</br>
-    <br>""" Saves a modfied version of each image in directory.</br>
+def garima(directory=None):
+    """ Saves a modfied version of each image in directory.
     
-    <br>Uses current directory if no directory is specified. </br>
-    <br>Places images in subdirectory 'modified', creating it if it does not exist.</br>
-    <br>New image files are of type PNG and have transparent rounded corners.</br>
-    <br>"""</br>
+    Uses current directory if no directory is specified. 
+    Places images in subdirectory 'modified', creating it if it does not exist.
+    New image files are of type PNG and have transparent rounded corners.
+    """
  
-    <br>if directory == None:</br>
-        <br>directory = os.getcwd() # Use working directory if unspecified</br>
+    if directory == None:
+        directory = os.getcwd() # Use working directory if unspecified
         
-    <br># Create a new directory 'altered'</br>
-    <br>new_directory = os.path.join(directory, 'altered')</br>
-    <br>try:</br>
-        <br>os.mkdir(new_directory)</br>
-    <br>except OSError:</br>
-        <br>pass # if the directory already exists, proceed</br>
+    # Create a new directory 'altered'
+    new_directory = os.path.join(directory, 'altered')
+    try:
+        os.mkdir(new_directory)
+    except OSError:
+        pass # if the directory already exists, proceed  
     
-    <br>#load all the images</br>
-    <br>image_list, file_list = get_images(directory)  </br>
+    #load all the images
+    image_list, file_list = get_images(directory)  
 
-    <br>#go through the images and save modified versions</br>
-    <br>for n in range(len(image_list)):</br>
-        <br># Parse the filename</br>
-        <br>filename, filetype = file_list[n].split('.')</br>
+    #go through the images and save modified versions
+    for n in range(len(image_list)):
+        # Parse the filename
+        filename, filetype = file_list[n].split('.')
         
-        <br># calls your modified method, passing the color parameter</br>
-        <br>new_image = teryn(image_list[n])</br>
+        # calls your modified method, passing the color parameter
+        new_image = teryn(image_list[n])
 
-        <br>#save the altered image, suing PNG to retain transparency</br>
-       <br> new_image_filename = os.path.join(new_directory, filename + '.png')</br>
-        <br>new_image.save(new_image_filename)</br>    
-        </p></br>
+        #save the altered image, suing PNG to retain transparency
+        new_image_filename = os.path.join(new_directory, filename + '.png')
+        new_image.save(new_image_filename)    
+        </pre>
 	</body>
 	</head>
 	</html>

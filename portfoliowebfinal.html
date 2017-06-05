@@ -30,118 +30,267 @@
 			file takes the lists and chooses random items from the list(the questions) by using the random.randint function.
 			We programed the game to loop on the same question until the user answers correctly.</br>
 			<p style="color:#ff0000"><font size=5>This is the code for the main file.</font></p>
-			<br>import Reading_file</br>
-<br>import random</br>
-<br>import time #only need to import time once</br>
+		<pre>import Reading_file
+import random
+import time #only need to import time once
 
-<br>def intro():</br>
-    <br>sleep_time = 5 #make 0 when debugging so it doesn't take forever</br>
-    <br>print "You and your best friend have been on a mission for 4 years. Throughout these four years you've fought and experienced unimaginable things."</br> 
-    <br>time.sleep(sleep_time)</br>
-    <br>print "You've noticed that every night your ""best friend"" has been stealing your rations. Your rations are almost gone and you need to act fast."</br>
-    <br>time.sleep(sleep_time)</br>
-    <br>print "There is a legend about a special potion that will get you through your journey safely. However only one person may drink it. If you try to share it"</br>
-    <br>time.sleep(sleep_time)</br>
-    <br>print "its magic won't work. You are about to embark on the race for your life against your so called best friend. There are a series of questions you must"</br>
-    <br>time.sleep(sleep_time)</br>
-    <br>print "answer in order to get the potion. Some things you might want to keep in mind: NUMBERS should be in numerical form ex:5, DATES should be in the proper format"</br>
-    <br>time.sleep(sleep_time)</br>
-    <br>print "ex:February 19, 1865, NAMES should contain any capitals ex:Teryn Kum, start all answers with a capital letter."</br>
-    <br>time.sleep(sleep_time)</br>
-<br>def questionloop():</br>
-    <br>questions, answers, hquestions, hanswers = Reading_file.smartness()</br>
-    <br>for y in range(8):#first round of easy questions</br>
-        <br>x = random.randint(0, len(questions)-1)</br>
-        <br>single_question(questions[x], answers[x])</br>
-        <br>#print len(questions)</br>
-        <br>#print x</br>
-        <br>del questions[x]</br>
-        <br>del answers[x]</br>
-    <br>print "ROADBLOCK here's a harder question for you!"</br>
-    <br>i = random.randint(0, len(hquestions)-1)#first round of hard questions</br>
-    <br>print len(hquestions)</br>
-    <br>print i</br>
-    <br>single_hquestion(hquestions[i], hanswers[i])</br>
-    <br>del hanswers[i]</br>
-    <br>del hquestions[i]</br>
-    <br>for y in range(4):#second round of easy questions</br>
-        <br>x = random.randint(0, len(questions)-1)</br>
-        <br>single_question(questions[x], answers[x])</br>
-        <br>print len(questions)</br>
-        <br>print x</br>
-        <br>del questions[x]</br>
-        <br>del answers[x]</br>
-    <br>print "ROADBLOCK AGAIN!!!"</br>
-    <br>i = random.randint(0, len(hquestions)-1)#second round of hard questions</br>
-    <br>print len(hquestions)</br>
-    <br>print i</br>
-    <br>single_hquestion(hquestions[i], hanswers[i])</br>
-    <br>del hanswers[i]</br>
-    <br>del hquestions[i]</br>
-    <br>for y in range(4):#third round of easy questions</br>
-        <br>x = random.randint(0, len(questions)-1)</br>
-        <br>single_question(questions[x], answers[x])</br>
-        <br>print len(questions)</br>
-        <br>print x</br>
-        <br>del questions[x]</br>
-        <br>del answers[x]</br>
-    <br>print "ROADBLOCK!!!"</br>
-    <br>i = random.randint(0, len(hquestions)-1)#third round of hard questions</br>
-    <br>print len(hquestions)</br>
-    <br>print i</br>
-    <br>single_hquestion(hquestions[i], hanswers[i])</br>
-    <br>del hanswers[i]</br>
-    <br>del hquestions[i]</br>
-<br>def single_hquestion(hquestions, hanswers):</br>
-    <br>ha = raw_input(hquestions)</br>
-    <br>if ha == str(hanswers):</br>
-        <br>print "Next question!"</br>
-    <br>else:</br>
-        <br>while ha != str(hanswers):</br>
-            <br>ha = raw_input(hquestions)</br>
-        <br>print "Next question!"</br>
-<br>def single_question(question, answer):</br>
-    <br>a = raw_input(question)</br>
-    <br>if a == str(answer):</br>
-        <br>print "Next question!"</br>
-    <br>else:</br>
-        <br>while a != str(answer):</br>
-            <br>a = raw_input(question)</br>
-        <br>print "Next question!"</br>
+def intro():
+    sleep_time = 5 #make 0 when debugging so it doesn't take forever
+    print "You and your best friend have been on a mission for 4 years. Throughout these four years you've fought and experienced unimaginable things." 
+    time.sleep(sleep_time)
+    print "You've noticed that every night your ""best friend"" has been stealing your rations. Your rations are almost gone and you need to act fast."
+    time.sleep(sleep_time)
+    print "There is a legend about a special potion that will get you through your journey safely. However only one person may drink it. If you try to share it"
+    time.sleep(sleep_time)
+    print "its magic won't work. You are about to embark on the race for your life against your so called best friend. There are a series of questions you must"
+    time.sleep(sleep_time)
+    print "answer in order to get the potion. Some things you might want to keep in mind: NUMBERS should be in numerical form ex:5, DATES should be in the proper format"
+    time.sleep(sleep_time)
+    print "ex:February 19, 1865, NAMES should contain any capitals ex:Teryn Kum, start all answers with a capital letter."
+    time.sleep(sleep_time)
+def questionloop():
+    questions, answers, hquestions, hanswers = Reading_file.smartness()
+    for y in range(8):#first round of easy questions
+        x = random.randint(0, len(questions)-1)
+        single_question(questions[x], answers[x])
+        #print len(questions)
+        #print x
+        del questions[x]
+        del answers[x]
+    print "ROADBLOCK here's a harder question for you!"
+    i = random.randint(0, len(hquestions)-1)#first round of hard questions
+    print len(hquestions)
+    print i
+    single_hquestion(hquestions[i], hanswers[i])
+    del hanswers[i]
+    del hquestions[i]
+    for y in range(4):#second round of easy questions
+        x = random.randint(0, len(questions)-1)
+        single_question(questions[x], answers[x])
+        print len(questions)
+        print x
+        del questions[x]
+        del answers[x]
+    print "ROADBLOCK AGAIN!!!"
+    i = random.randint(0, len(hquestions)-1)#second round of hard questions
+    print len(hquestions)
+    print i
+    single_hquestion(hquestions[i], hanswers[i])
+    del hanswers[i]
+    del hquestions[i]
+    for y in range(4):#third round of easy questions
+        x = random.randint(0, len(questions)-1)
+        single_question(questions[x], answers[x])
+        print len(questions)
+        print x
+        del questions[x]
+        del answers[x]
+    print "ROADBLOCK!!!"
+    i = random.randint(0, len(hquestions)-1)#third round of hard questions
+    print len(hquestions)
+    print i
+    single_hquestion(hquestions[i], hanswers[i])
+    del hanswers[i]
+    del hquestions[i]
+def single_hquestion(hquestions, hanswers):
+    ha = raw_input(hquestions)
+    if ha == str(hanswers):
+        print "Next question!"
+    else:
+        while ha != str(hanswers):
+            ha = raw_input(hquestions)
+        print "Next question!"
+def single_question(question, answer):
+    a = raw_input(question)
+    if a == str(answer):
+        print "Next question!"
+    else:
+        while a != str(answer):
+            a = raw_input(question)
+        print "Next question!"
     
         
-<br>intro()</br>
-<br>questionloop()</br>
+intro()
+questionloop()
 
-<p style="color:#ff0000"><font size=5>This is the code for the reading file.</font></p>
-<br>def smartness():</br>
-    <br>questions = []</br>
-    <br>answers = []</br>
-    <br>hquestions = []</br>
-    <br>hanswers = []</br>
-    <br>counter = 1</br>
-    <br>easy = True</br>
-    <br>with open("file.txt", "r") as ins:</br>
-        <br>for line in ins:</br>
-            <br>if line.rstrip('\n') == "HARD QUESTIONS":</br>
-                <br>easy = False</br>
-                <br>#print "HARD QUESTIONS START HERE: " + str(counter)</br>
-                <br>counter+=1 #to adjust it? maybe?</br>
-                <br>continue</br>
-            <br>if counter%2 == 1:</br>
-                <br>if easy:</br>
-                    <br>questions.append(line.rstrip('\n'))</br>
-                <br>else:</br>
-                    <br>hanswers.append(line.rstrip('\n'))</br>
-            <br>else: </br>
-                <br>if easy:</br>
-                    <br>answers.append(line.rstrip('\n'))</br>
-                <br>else:</br>
-                    <br>hquestions.append(line.rstrip('\n'))</br>
-            <br>counter += 1</br>
-        <br>return questions, answers, hquestions, hanswers</br>
-        
-</p>
+    #load questions
+    #inside a loop, loop until they've answered enough questions
+    #choose a random question and paired answer from questions reading file
+    #remove question from list
+    #get response
+    </pre>
+    <pre>
+    Who painted a late 15th- century mural known as the Last Supper?
+Leonardo da Vinci
+What is the largest island in the Caribbean Sea? 
+Cuba
+What is Teryn's middle name?
+Kiele
+Where was Garima born?
+Nepal
+How old is Teryn's dog?
+10
+What is the capital of Canada?
+Ottawa
+What is the slang military term for the distance of one kilometer?
+Klick
+What was the first toy advertised on TV?
+Mr. Potato Head
+What was the first US city to have a subway system?
+Boston
+At a military funeral the American Flag is folded how many times? 
+13
+Which month gets its name from the latin meaning ""ten""?
+December
+How many days does a cat usually stay in heat?
+5
+What did the ancient Romans dye their hair with?
+Bird poop
+What year was South Pasadena High School built?
+1906
+What is the most common non-contagious disease in the world?
+Tooth Decay
+What is Teryn's favorite color?
+Red
+What is Garima's favorite color?
+Blue
+Which bird is used as a sign of peace?
+Dove
+What is Teryn's favorite food?
+Noodles
+How many different schools has Garima attended(including SPMS)? 
+5
+What is Garima's middle name?
+None
+What are the first three digits in Teryn's phone number?
+808
+How many times has Teryn been to Hawaii?
+17
+What is Mr. Shorr's favorite food?
+Orange Chicken
+How many years has Mr. Shorr been teaching at SPHS?
+5
+What was the first profession Teryn ever wanted to be? 
+Artist
+What year did the first Iphone come out?
+2007
+What percentage of the population is left handed?
+10
+What is the dogs name from Wizard of Oz?
+Toto
+What water animal produces 650 volts of electricity?
+Electric Eel
+How many different dog breeds are there in the world?
+339
+What was the name of the first U.S Space Station?
+Skylab
+On average how many hours should a teen sleep?
+9
+What is a baby horse called?
+Foal
+How many years is a score?
+20
+What is the most common swimming stroke?
+Freestyle
+How old is the oldest person in the world currently?
+117
+What is the smallest bird in the world?
+Hummingbird
+What grade did Teryn get glasses?
+4th grade
+What valley is the site of the Earth's highest-ever recorded temperature, 134 degrees fahrenheit?
+Death Valley
+What is the capital of Australia?
+Canberra
+What is the name of the tallest uninterrupted waterfall in the world?
+Victoria Falls
+Which is taller? The Eiffel Tower or The Statue of Liberty?
+The Eiffel Tower
+'Stars and Stripes' is the nickname of the flag of which country?
+United States of America
+What is the common name for calcium carbonate?
+Chalk
+Which was the country that first made the use of paper money?
+China
+In what year was the internet created?
+1969
+Who was our president during the Civil War?
+Abraham Lincoln
+What is the name of the animal that makes the loudest noise on earth?
+Blue Whale
+What is the only planet in our solar system that rotates in a different direction from the other planets?
+Venus
+How many inches are required to donate hair to Locks of Love?
+10in
+What goes in the water black and comes out red?
+Lobster
+HARD QUESTIONS
+You can see me in water, but I never get wet. What am I?
+Reflection
+Walk on the living, they don't even mumble. Walk on the dead, they mutter and grumble. What am I?
+Fallen leaves
+I always follow my brother, although very different we are. You can see him, but not me. You can hear me, but not him. What am I?
+Thunder and lightning
+What is the next three letters in this riddle? OTTFFSS _ _ _
+ENT
+A boy has as many sisters as brothers, but each sister has only half as many sisters as brothers. How many brothers and sisters are there?
+4 brothers and 3 sisters
+What question can you never answer yes to?
+Are you asleep yet?
+What fastens two people yet touches only one?
+Wedding ring
+The fewer of me you have, the more I am worth. What am I?
+Friends
+What does this mean? ECNALG
+Backwards glance
+What does this mean? HIJKLMNO
+H2O
+What does this mean? I RIGHT I
+Right between the eyes
+Can you name three consecutive days without using the words Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday?
+Yesterday, today, tomorrow
+When does Christmas come before Thanksgiving?
+In the dictionary
+Little tommy Tittletat took two T's. To tie two ups to two tall trees. To torment the terrible tittletat, How many T's in all of that?
+2
+A pregnant lady named her children: Dominique, Regis, Michelle, Fawn, Sophie and Lara. What will she name her next child? Jessica, Katie, Abby or Tilly?
+Tilly
+The more there is the less you see. What am I?
+Darkness
+Guess the next three letters in the series?GTNTL _ _ _
+ITS
+What jumps when it walks and sits when it stands?
+Kangaroo
+</pre>
+<pre>
+def smartness():
+    questions = []
+    answers = []
+    hquestions = []
+    hanswers = []
+    counter = 1
+    easy = True
+    with open("file.txt", "r") as ins:
+        for line in ins:
+            if line.rstrip('\n') == "HARD QUESTIONS":
+                easy = False
+                #print "HARD QUESTIONS START HERE: " + str(counter)
+                counter+=1 #to adjust it? maybe?
+                continue
+            if counter%2 == 1:
+                if easy:
+                    questions.append(line.rstrip('\n'))
+                else:
+                    hanswers.append(line.rstrip('\n'))
+            else: 
+                if easy:
+                    answers.append(line.rstrip('\n'))
+                else:
+                    hquestions.append(line.rstrip('\n'))
+            counter += 1
+        return questions, answers, hquestions, hanswers
+        </pre>
+
 
 	</body>
 	</head>
